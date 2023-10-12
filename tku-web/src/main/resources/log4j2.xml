@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorinterval="1800" status="FATAL">
+    <Properties>
+        <Property name="basePath">/achlog</Property>
+        <Property name="serviceName">webapp</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <!-- <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t]
+                %C{1}.%M(%F:%L) – %m%n" /> -->
+            <PatternLayout
+                    pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{[%-5level]} [%t] %cyan{%C{1}.%M(%F:%L)} – %m%n"/>
+        </Console>
+
+        <RollingRandomAccessFile name="DebugFile"
+                                 fileName="${basePath}/${serviceName}.log"
+                                 filePattern="${basePath}/$${date:yyyyMMdd}/${serviceName}-%d{yyyy-MM-dd}.log">
+            <PatternLayout
+                    pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %C{1}.%M(%F:%L) – %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+
+    </Appenders>
+
+    <Loggers>
+        <logger name="Validator" level="ERROR" additivity="true" />
+        <logger name="com.zaxxer.hikari" level="ERROR" additivity="true"/>
+        <logger name="PROTOCOL_MESSAGE" level="ERROR" additivity="true"/>
+        <logger name="com.sun" level="ERROR" additivity="true"/>
+        <logger name="com.ulisesbocchio" level="ERROR" additivity="true" />
+        <logger name="httpclient.wire" level="ERROR" additivity="true" />
+        <logger name="io.netty" level="ERROR" additivity="true" />
+        <logger name="net.sf" level="ERROR" additivity="true" />
+        <logger name="springfox" level="ERROR" additivity="true"/>
+        <logger name="HttpLoggingInterceptor" level="ERROR" additivity="true"/>
+        <logger name="com.linecorp" level="ERROR" additivity="true"/>
+        <logger name="_org" level="ERROR" additivity="true"/>
+        <logger name="org" level="ERROR" additivity="true"/>
+        <logger name="okhttp3" level="ERROR" additivity="true"/>
+        <logger name="javax" level="ERROR" additivity="true"/>
+        <logger name="jakarta" level="ERROR" additivity="true"/>
+        <logger name="angus" level="ERROR" additivity="true"/>
+        <logger name="sun" level="ERROR" additivity="true"/>
+        <logger name="org.tku" level="DEBUG" additivity="true"/>
+
+
+        <Root level="debug" additivity="false">
+            <AppenderRef ref="console"/>
+            <!--            <AppenderRef ref="DebugFile"/>-->
+        </Root>
+    </Loggers>
+</Configuration>
