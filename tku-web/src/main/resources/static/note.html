@@ -3,12 +3,84 @@
 <head>
     <meta charset="utf-8">
     <title>SOS</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.min.js" ></script>
 </head>
 <body>
-<p>資料夾結構</p>
-<img src="/folder.png">
+<div class="container">
+    <div class="row">
+        <label class="col-sm-12">i18n設定</label>
+        <div class="col-sm-12">
+            <div class="form-floating">
+                <textarea class="form-control" rows="8" style="height: 250px" >
+                    @Autowired
+                    LocaleResolver localeResolver;
 
-<hr>
+                    public String index(@RequestParam(required = false, defaultValue = "en") String locale,
+                        HttpServletRequest request, HttpServletResponse response) {
+                    ...
+                    localeResolver.setLocale(request, response, new Locale(locale));
+                    ...
+                </textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-12">bootstrap</label>
+        <div class="col-sm-12">
+            <div class="form-floating">
+                <textarea class="form-control" rows="8" style="height: 250px" >
+                    @PostMapping(value = "/login")
+                    public String login(String userName, String password) {
+                        log.debug("userName = {}, password = {}", userName, password);
+                        return "index";
+                    }
+                </textarea>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-floating">
+                <textarea class="form-control" rows="8" style="height: 250px" >
+                    <html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}" ></script>
+</head>
+<body>
+<div class="container w-50">
+    <form th:action="@{/login}" method="POST">
+        <div class="row">
+            <label class="col-sm-12 col-md-3 col-lg-2" th:text="#{label.login.userName}"></label>
+            <div class="col-sm-12 col-md-9 col-lg-10">
+                <input class="form-control" name="userName">
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-12 col-md-3 col-lg-2" th:text="#{label.login.password}"></label>
+            <div class="col-sm-12 col-md-9 col-lg-10">
+                <input type="password" class="form-control" name="password">
+            </div>
+        </div>
+        <div class="row text-center">
+            <button class="btn btn-primary" th:text="#{btn.login}"></button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
+                </textarea>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <img src="/folder.png">
+        </div>
+    </div>
+</div>
 
 <p>https://github.com/chihualu/tku-202301.git</p>
 <a href="note.txt" >筆記下載</a>

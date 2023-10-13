@@ -3,9 +3,29 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/bootstrap.min.js}" ></script>
 </head>
 <body>
-<h1>Login</h1>
+<div class="container w-50">
+    <form th:action="@{/login}" method="POST">
+        <div class="row">
+            <label class="col-sm-12 col-md-3 col-lg-2" th:text="#{label.login.userName}"></label>
+            <div class="col-sm-12 col-md-9 col-lg-10">
+                <input class="form-control" name="userName">
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-12 col-md-3 col-lg-2" th:text="#{label.login.password}"></label>
+            <div class="col-sm-12 col-md-9 col-lg-10">
+                <input type="password" class="form-control" name="password">
+            </div>
+        </div>
+        <div class="row text-center">
+            <button class="btn btn-primary" th:text="#{btn.login}"></button>
+        </div>
+    </form>
+</div>
 
 </body>
 </html>
