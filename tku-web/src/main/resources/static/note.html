@@ -9,17 +9,15 @@
 <body>
 <div class="container">
     <div class="row">
-        <label class="col-sm-12">i18n設定</label>
+        <label class="col-sm-12">pom.xml</label>
         <div class="col-sm-12">
             <div class="form-floating">
                 <textarea class="form-control" rows="8" style="height: 250px" >
-                    @Autowired
-                    LocaleResolver localeResolver;
-
-                    public String index(@RequestParam(required = false, defaultValue = "en") String locale,
-                        HttpServletRequest request, HttpServletResponse response) {
                     ...
-                    localeResolver.setLocale(request, response, new Locale(locale));
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-security</artifactId>
+                    </dependency>
                     ...
                 </textarea>
             </div>
@@ -27,62 +25,94 @@
     </div>
 
     <div class="row">
-        <label class="col-sm-12">bootstrap</label>
+        <label class="col-sm-12">SecurityConfiguration</label>
         <div class="col-sm-12">
             <div class="form-floating">
                 <textarea class="form-control" rows="8" style="height: 250px" >
-                    @PostMapping(value = "/login")
-                    public String login(String userName, String password) {
-                        log.debug("userName = {}, password = {}", userName, password);
-                        return "index";
+                    @Configuration
+                    @EnableWebSecurity
+                    @Log4j2
+                    public class SecurityConfiguration {
+                         @Bean
+                        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+                            http.authorizeHttpRequests(registry -> {
+                                // 定義哪些URL需要被保護、哪些不需要被保護
+                                registry.requestMatchers("/web/**").authenticated()
+                                        .anyRequest().permitAll();
+
+                            });
+                            return http.build();
+                        }
                     }
                 </textarea>
             </div>
         </div>
+    </div>
+
+
+    <div class="row">
+        <label class="col-sm-12">SecurityConfiguration</label>
         <div class="col-sm-12">
             <div class="form-floating">
                 <textarea class="form-control" rows="8" style="height: 250px" >
-                    <html xmlns:th="http://www.thymeleaf.org">
+                    @Bean
+                    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+                        return new BCryptPasswordEncoder();
+                    }
 
-<head>
-    <meta charset="utf-8">
-    <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-    <script th:src="@{/js/bootstrap.min.js}" ></script>
-</head>
-<body>
-<div class="container w-50">
-    <form th:action="@{/login}" method="POST">
-        <div class="row">
-            <label class="col-sm-12 col-md-3 col-lg-2" th:text="#{label.login.userName}"></label>
-            <div class="col-sm-12 col-md-9 col-lg-10">
-                <input class="form-control" name="userName">
-            </div>
-        </div>
-        <div class="row">
-            <label class="col-sm-12 col-md-3 col-lg-2" th:text="#{label.login.password}"></label>
-            <div class="col-sm-12 col-md-9 col-lg-10">
-                <input type="password" class="form-control" name="password">
-            </div>
-        </div>
-        <div class="row text-center">
-            <button class="btn btn-primary" th:text="#{btn.login}"></button>
-        </div>
-    </form>
-</div>
+                    @Bean
+                    public UserDetailsServiceImpl userDetailsService() {
+                        UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
+                        userDetailsService.setPasswordEncoder(bCryptPasswordEncoder());
+                        return userDetailsService;
+                    }
 
-</body>
-</html>
+                    @Bean
+                    public DaoAuthenticationProvider daoAuthenticationProvider() {
+                        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+                        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+                        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+                        return daoAuthenticationProvider;
+                    }
                 </textarea>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <label class="col-sm-12">SecurityConfiguration</label>
+        <img src="folder.png" class="col-sm-3">
+    </div>
+    <div class="row">
+        <label class="col-sm-12">SecurityConfiguration</label>
         <div class="col-sm-12">
-            <img src="/folder.png">
+            <a href="java/SessionData.java"><span class="badge bg-primary px-1">SessionData</span></a>
+            <a href="java/UserDetailsServiceImpl.java"><span class="badge bg-primary px-1">UserDetailsServiceImpl</span></a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <label class="col-sm-12">nav.html</label>
+        <div class="col-sm-12">
+            <div class="form-floating">
+                <textarea class="form-control" rows="8" style="height: 250px" >
+                    <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
+                      <button class="btn btn-secondary my-2 my-sm-0" type="submit" th:text="#{btn.logout}"></button>
+                    </form>
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <label class="col-sm-12">SecurityConfiguration</label>
+        <div class="col-sm-12">
+            <a href="java/SecurityConfiguration.java"><span class="badge bg-primary px-1">SecurityConfiguration</span></a>
         </div>
     </div>
 </div>
-
+<hr>
 <p>https://github.com/chihualu/tku-202301.git</p>
-<a href="note.txt" >筆記下載</a>
 </body>
 </html>

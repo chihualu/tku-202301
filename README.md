@@ -107,3 +107,17 @@ nav.html
     </body>
 </html>
 ```
+
+
+
+## 第四堂
+
+### 課程大綱
+- 套用Spring Security，實作登入/登出功能
+- pom.xml
+```xml
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+```

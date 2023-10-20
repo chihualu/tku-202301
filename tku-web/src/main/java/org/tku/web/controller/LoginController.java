@@ -21,7 +21,7 @@ public class LoginController {
     @Autowired
     LocaleResolver localeResolver;
 
-    @GetMapping("/index")
+    @GetMapping("/web/index")
     public String index(@RequestParam(required = false) String locale,
                         HttpServletRequest request, HttpServletResponse response) {
         if(StringUtils.isNotBlank(locale)) {
@@ -32,11 +32,5 @@ public class LoginController {
     @GetMapping(value = {"/login", "/"})
     public String loginPage() throws JsonProcessingException {
         return "login";
-    }
-
-    @PostMapping(value = "/login")
-    public String login(String userName, String password) {
-        log.debug("userName = {}, password = {}", userName, password);
-        return "redirect:/index";
     }
 }

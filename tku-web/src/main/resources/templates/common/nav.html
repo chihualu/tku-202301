@@ -10,7 +10,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" th:href="@{/index}" th:text="#{common.index}">Home</a>
+            <a class="nav-link active text-white" aria-current="page" th:href="@{/web/index}" th:text="#{common.index}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" th:href="@{/web/app1}" th:text="#{common.app1}"></a>
@@ -19,6 +19,9 @@
             <a class="nav-link text-white" th:href="@{/web/app2}" th:text="#{common.app2}"></a>
           </li>
         </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit" th:text="#{btn.logout}"></button>
+        </form>
       </div>
     </div>
   </nav>
