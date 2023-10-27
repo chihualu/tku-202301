@@ -2,117 +2,66 @@
 
 <head>
     <meta charset="utf-8">
-    <title>SOS</title>
+    <title>NOTES</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.min.js" ></script>
 </head>
 <body>
-<div class="container">
+<img src="folder.png" class="img-thumbnail" alt="folder"><br>
+<a href="java/User.java" ><span class="badge bg-primary">User</span></a>
+<a href="java/UserRepository.java"><span class="badge bg-primary">UserRepository</span></a>
+<a href="file/application-database.properties"><span class="badge bg-primary">application-database.properties</span></a>
+<div class="container-fluid w-100">
     <div class="row">
-        <label class="col-sm-12">pom.xml</label>
+        <label class="col-sm-12">pom.xml - postgresql.version = 42.6.0</label>
         <div class="col-sm-12">
             <div class="form-floating">
-                <textarea class="form-control" rows="8" style="height: 250px" >
+                <textarea class="form-control" rows="8" style="height: 150px">
                     ...
                     <dependency>
                         <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-security</artifactId>
+                        <artifactId>spring-boot-starter-data-jpa</artifactId>
+                        <version>${spring-boot.version}</version>
+                    </dependency>
+
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgresql.version}</version>
+                    </dependency>
+
+
+                    <dependency>
+                        <groupId>jakarta.persistence</groupId>
+                        <artifactId>jakarta.persistence-api</artifactId>
+                        <version>3.1.0</version>
                     </dependency>
                     ...
                 </textarea>
             </div>
         </div>
     </div>
-
     <div class="row">
-        <label class="col-sm-12">SecurityConfiguration</label>
+        <li>WebApplication -> @EnableJpaRepositories</li>
+        <li>application-database.properties</li>
+        <li>application.properties -> spring.profiles.include=database</li>
+        <li>User.java -> @Table(name = "user", schema = "public", catalog = "tku")</li>
+    </div>
+    <div class="row">
         <div class="col-sm-12">
             <div class="form-floating">
-                <textarea class="form-control" rows="8" style="height: 250px" >
-                    @Configuration
-                    @EnableWebSecurity
-                    @Log4j2
-                    public class SecurityConfiguration {
-                         @Bean
-                        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-                            http.authorizeHttpRequests(registry -> {
-                                // 定義哪些URL需要被保護、哪些不需要被保護
-                                registry.requestMatchers("/web/**").authenticated()
-                                        .anyRequest().permitAll();
-
-                            });
-                            return http.build();
-                        }
-                    }
+                <textarea class="form-control" rows="8" style="height: 150px">
+                    UserRepository userRepository = applicationContext.getBean(UserRepository.class);
+                    userRepository.findById("kenny").ifPresent(user -> log.debug(user.toString()));
+                    userRepository.findById("john").ifPresent(user -> log.debug(user.toString()));
+                    userRepository.findAll().forEach(user -> log.debug(user.toString()));
                 </textarea>
             </div>
         </div>
     </div>
 
-
-    <div class="row">
-        <label class="col-sm-12">SecurityConfiguration</label>
-        <div class="col-sm-12">
-            <div class="form-floating">
-                <textarea class="form-control" rows="8" style="height: 250px" >
-                    @Bean
-                    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-                        return new BCryptPasswordEncoder();
-                    }
-
-                    @Bean
-                    public UserDetailsServiceImpl userDetailsService() {
-                        UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
-                        userDetailsService.setPasswordEncoder(bCryptPasswordEncoder());
-                        return userDetailsService;
-                    }
-
-                    @Bean
-                    public DaoAuthenticationProvider daoAuthenticationProvider() {
-                        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-                        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-                        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
-                        return daoAuthenticationProvider;
-                    }
-                </textarea>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <label class="col-sm-12">SecurityConfiguration</label>
-        <img src="folder.png" class="col-sm-3">
-    </div>
-    <div class="row">
-        <label class="col-sm-12">SecurityConfiguration</label>
-        <div class="col-sm-12">
-            <a href="java/SessionData.java"><span class="badge bg-primary px-1">SessionData</span></a>
-            <a href="java/UserDetailsServiceImpl.java"><span class="badge bg-primary px-1">UserDetailsServiceImpl</span></a>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <label class="col-sm-12">nav.html</label>
-        <div class="col-sm-12">
-            <div class="form-floating">
-                <textarea class="form-control" rows="8" style="height: 250px" >
-                    <form class="form-inline my-2 my-lg-0" th:action="@{/logout}" method="POST">
-                      <button class="btn btn-secondary my-2 my-sm-0" type="submit" th:text="#{btn.logout}"></button>
-                    </form>
-                </textarea>
-            </div>
-        </div>
-
-    </div>
-    <div class="row">
-        <label class="col-sm-12">SecurityConfiguration</label>
-        <div class="col-sm-12">
-            <a href="java/SecurityConfiguration.java"><span class="badge bg-primary px-1">SecurityConfiguration</span></a>
-        </div>
-    </div>
 </div>
-<hr>
-<p>https://github.com/chihualu/tku-202301.git</p>
+    <hr>
+    <h2>https://github.com/chihualu/tku-202301.git</h2>
 </body>
 </html>

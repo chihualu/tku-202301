@@ -121,3 +121,16 @@ nav.html
         <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
 ```
+
+## 第五堂
+
+### 課程大綱
+- 使用資料庫postgres
+- 套用spring-boot-starter-data-jpa
+- 講解connection pool
+```xml
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+```

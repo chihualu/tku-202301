@@ -37,7 +37,7 @@ public class SecurityConfiguration {
         http.formLogin(httpSecurityFormLoginConfigurer -> {
             httpSecurityFormLoginConfigurer.loginPage("/login")
                     .defaultSuccessUrl("/web/index")
-                    .usernameParameter("userName")
+                    .usernameParameter("userId")
                     .passwordParameter("password").failureHandler((request, response, exception)->{
                 log.error("密碼錯誤");
                 response.sendRedirect("/login?error=failed");
