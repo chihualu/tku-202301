@@ -1,5 +1,6 @@
 package org.tku.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,6 +21,7 @@ public class User {
     @Column(name = "user_name")
     private String userName;
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Column(name = "email")
     private String email;

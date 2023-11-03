@@ -37,7 +37,7 @@
         <logger name="springfox" level="ERROR" additivity="true"/>
         <logger name="HttpLoggingInterceptor" level="ERROR" additivity="true"/>
         <logger name="com.linecorp" level="ERROR" additivity="true"/>
-        <logger name="_org" level="ERROR" additivity="true"/>
+<!--        <logger name="_org" level="ERROR" additivity="true"/>-->
         <logger name="org" level="ERROR" additivity="true"/>
         <logger name="okhttp3" level="ERROR" additivity="true"/>
         <logger name="javax" level="ERROR" additivity="true"/>
@@ -45,6 +45,7 @@
         <logger name="angus" level="ERROR" additivity="true"/>
         <logger name="sun" level="ERROR" additivity="true"/>
         <logger name="org.tku" level="DEBUG" additivity="true"/>
+<!--        <logger name="org.springframework" level="DEBUG" additivity="true"/>-->
 
 
         <Root level="debug" additivity="false">

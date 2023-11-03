@@ -51,8 +51,9 @@ public class SecurityConfiguration {
 
         });
 
-//        http.csrf(httpSecurityCsrfConfigurer-> {
-//        });
+        http.csrf(httpSecurityCsrfConfigurer-> {
+            httpSecurityCsrfConfigurer.ignoringRequestMatchers("/api/v1/**");
+        });
 
         http.exceptionHandling(configurer -> {
             configurer.authenticationEntryPoint((request, response, authException) -> {
@@ -91,7 +92,6 @@ public class SecurityConfiguration {
     @Bean
     public UserDetailsServiceImpl userDetailsService() {
         UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();
-        userDetailsService.setPasswordEncoder(bCryptPasswordEncoder());
         return userDetailsService;
     }
 

@@ -25,6 +25,7 @@
         <module>tku-web</module>
         <module>tku-database</module>
         <module>tku-api</module>
+        <module>tku-backend-ap</module>
     </modules>
 
     <dependencies>

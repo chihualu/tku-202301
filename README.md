@@ -134,3 +134,30 @@ nav.html
         <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 ```
+
+
+## 第六堂
+
+### 課程大綱
+- 使用資料庫postgres
+- 撰寫User CRUD API的方式
+- 講解CSRF攻擊
+- Jackson的使用@JsonIgnore把特定欄位不回傳前端
+```xml
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+```
+
+```java
+    http.csrf(httpSecurityCsrfConfigurer-> {
+        httpSecurityCsrfConfigurer.ignoringRequestMatchers("/api/v1/**");
+    });
+```
+
+
+## 第七堂
+
+### 課程大綱

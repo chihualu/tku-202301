@@ -8,53 +8,45 @@
 </head>
 <body>
 <img src="folder.png" class="img-thumbnail" alt="folder"><br>
-<a href="java/User.java" ><span class="badge bg-primary">User</span></a>
-<a href="java/UserRepository.java"><span class="badge bg-primary">UserRepository</span></a>
-<a href="file/application-database.properties"><span class="badge bg-primary">application-database.properties</span></a>
+<a href="java/UserController.java"><span class="badge bg-primary">UserController</span></a>
 <div class="container-fluid w-100">
     <div class="row">
-        <label class="col-sm-12">pom.xml - postgresql.version = 42.6.0</label>
+        <label class="col-sm-12">pom.xml</label>
         <div class="col-sm-12">
             <div class="form-floating">
                 <textarea class="form-control" rows="8" style="height: 150px">
                     ...
-                    <dependency>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-starter-data-jpa</artifactId>
-                        <version>${spring-boot.version}</version>
-                    </dependency>
+                           <dependency>
+                                <groupId>org.tku</groupId>
+                                <artifactId>tku-api</artifactId>
+                                <version>1.0-SNAPSHOT</version>
+                            </dependency>
 
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>${postgresql.version}</version>
-                    </dependency>
+                            <dependency>
+                                <groupId>com.fasterxml.jackson.core</groupId>
+                                <artifactId>jackson-annotations</artifactId>
+                                <version>2.15.2</version>
+                            </dependency>
 
-
-                    <dependency>
-                        <groupId>jakarta.persistence</groupId>
-                        <artifactId>jakarta.persistence-api</artifactId>
-                        <version>3.1.0</version>
-                    </dependency>
+                            <dependency>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-starter-web</artifactId>
+                            </dependency>
                     ...
                 </textarea>
             </div>
         </div>
     </div>
     <div class="row">
-        <li>WebApplication -> @EnableJpaRepositories</li>
-        <li>application-database.properties</li>
-        <li>application.properties -> spring.profiles.include=database</li>
-        <li>User.java -> @Table(name = "user", schema = "public", catalog = "tku")</li>
-    </div>
-    <div class="row">
+        <label class="col-sm-12">SecurityConfiguration.java</label>
         <div class="col-sm-12">
             <div class="form-floating">
                 <textarea class="form-control" rows="8" style="height: 150px">
-                    UserRepository userRepository = applicationContext.getBean(UserRepository.class);
-                    userRepository.findById("kenny").ifPresent(user -> log.debug(user.toString()));
-                    userRepository.findById("john").ifPresent(user -> log.debug(user.toString()));
-                    userRepository.findAll().forEach(user -> log.debug(user.toString()));
+                    ...
+                        http.csrf(httpSecurityCsrfConfigurer-> {
+                            httpSecurityCsrfConfigurer.ignoringRequestMatchers("/api/v1/**");
+                        });
+                    ...
                 </textarea>
             </div>
         </div>
