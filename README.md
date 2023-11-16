@@ -161,3 +161,118 @@ nav.html
 ## 第七堂
 
 ### 課程大綱
+- 資料庫轉換postgresql變成h2 (因為有些人無法安裝)
+- h2為輕量級資料庫，可以Embedded在JVM中，不須額外安裝
+```xml
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>2.2.224</version>
+            </dependency>
+```
+```properties
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.url=jdbc:h2:~/db
+spring.datasource.username=sa
+spring.datasource.password=ENC(urtjMImAhzPhQuiyPNr8V3m84EHdxkajxGhTW+q0SEUwA4mVI/7yu5u7GTnbCU3W)
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.show-sql=false
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.datasource.type=com.zaxxer.hikari.HikariDataSource
+spring.datasource.hikari.minimum-idle=2
+spring.datasource.hikari.maximum-pool-size=30
+spring.datasource.hikari.auto-commit=true
+spring.datasource.hikari.idle-timeout=30000
+spring.datasource.hikari.pool-name=tku-database
+spring.datasource.hikari.max-lifetime=1800000
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.connection-test-query=SELECT 1
+#關閉 Hibernate 參考資料庫 Metadata 加快啟動速度
+spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false
+spring.jpa.defer-datasource-initialization=true
+spring.sql.init.mode=embedded
+spring.sql.init.data-locations=classpath:/data.sql
+spring.sql.init.schema-locations=classpath:/schema.sql
+spring.sql.init.continue-on-error=true
+```
+- 使用jasypt來達到設定檔案資料加密 
+```xml
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>3.0.5</version>
+            </dependency>
+```
+```properties
+#未加密↓
+#spring.datasource.password=password 
+#加密後↓
+spring.datasource.password=ENC(urtjMImAhzPhQuiyPNr8V3m84EHdxkajxGhTW+q0SEUwA4mVI/7yu5u7GTnbCU3W)
+```
+```java
+        StringEncryptor stringEncryptor = applicationContext.getBean(StringEncryptor.class);
+        log.info(stringEncryptor.encrypt("password"));
+```
+- 加上H2Configuration.java -> 可以於網頁上下SQL查詢
+```java
+@Configuration
+public class H2Configuration {
+    @Bean
+    org.h2.tools.Server h2Server() {
+        Server server = new Server();
+        try {
+            server.runTool("-tcp");
+            server.runTool("-tcpAllowOthers");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return server;
+
+    }
+}
+```
+- 介紹批次排程
+```java
+@SpringBootApplication
+@Log4j2
+@Component
+@EnableJpaRepositories
+@EnableEncryptableProperties
+@EnableScheduling
+public class WebApplication implements CommandLineRunner {
+    ...
+}
+```
+```java
+@Component
+@Log4j2
+public class KeepAlive {
+
+    /**
+     * 每10秒執行一次
+     * 秒 分 時 日 月 周 (年) 年是可選參數，不一定要寫，其他都是必須的
+     */
+    @Scheduled(cron = "0/10 * * * * ?")
+    public void keepAlive1() {
+        log.info("Cron => " + DateFormatUtils.format(new Date(), "yyyy/MM/dd'T'HH:mm:ss"));
+    }
+
+
+    /**
+     * 執行完後休息一秒後再執行
+     */
+    @Scheduled(fixedDelay = 1000L)
+    public void keepAlive2() {
+        log.info("fixedDelay => " + DateFormatUtils.format(new Date(), "yyyy/MM/dd'T'HH:mm:ss"));
+    }
+
+
+    /**
+     * 每兩秒執行一次
+     */
+    @Scheduled(fixedRate = 2000L )
+    public void keepAlive3() {
+        log.info("fixedRate => " + DateFormatUtils.format(new Date(), "yyyy/MM/dd'T'HH:mm:ss"));
+    }
+}
+```

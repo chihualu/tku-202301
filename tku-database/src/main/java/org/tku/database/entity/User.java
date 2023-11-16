@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
-@Table(name = "user", schema = "public", catalog = "tku")
+@Table(name = "user_info")
 public class User {
     @Id
     @Column(name = "user_id")
