@@ -13,12 +13,12 @@ import java.util.Optional;
 
 @Controller
 @Log4j2
-public class BookStockController {
+public class BookController {
 
 
     private final BookRepository bookRepository;
 
-    public BookStockController(BookRepository bookRepository) {
+    public BookController(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
