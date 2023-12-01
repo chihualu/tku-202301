@@ -52,7 +52,7 @@ public class SecurityConfiguration {
         });
 
         http.csrf(httpSecurityCsrfConfigurer-> {
-            httpSecurityCsrfConfigurer.ignoringRequestMatchers("/api/v1/**");
+            httpSecurityCsrfConfigurer.ignoringRequestMatchers("/api/v1/**", "/callback");
         });
 
         http.exceptionHandling(configurer -> {
