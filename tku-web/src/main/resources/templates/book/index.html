@@ -1,0 +1,71 @@
+<html layout:decorate="~{common/layout}"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org" >
+<body>
+    <div layout:fragment="content">
+        <div class="card">
+            <div class="card card-header container">
+                <form th:action="@{/web/book}" th:object="${book}" class="needs-validation">
+                    <div class="alert alert-danger d-none" role="alert"></div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="bookSeq" th:text="#{function.book.bookSeq}"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control " id="bookSeq" name="bookSeq" th:value="*{bookSeq}" type="text" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="bookName" th:text="#{function.book.bookName}"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control " id="bookName" name="bookName" th:value="*{bookName}" th:maxlength="50" type="text" >
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="author" th:text="#{function.book.author}"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control " id="author" name="author" th:value="*{author}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label" for="price" th:text="#{function.book.price}"></label>
+                        <div class="col-sm-10">
+                            <input class="form-control " id="price" name="price" th:value="*{price}" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12 align-items-center d-flex">
+                            <input class="btn btn-primary btn-lg" type="submit" value="查詢">
+                            <a class="btn btn-primary btn-lg" th:href="@{/web/book/0}" >新增</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card card-body">
+                <table class="table table-striped table-bordered table-hover w-100 display nowrap" id="dataTables">
+                    <thead>
+                    <tr>
+                        <th class="text-center align-middle" th:text="#{function.book.bookSeq}"></th>
+                        <th class="text-center align-middle" th:text="#{function.book.bookName}"></th>
+                        <th class="text-center align-middle" th:text="#{function.book.author}"></th>
+                        <th class="text-center align-middle" th:text="#{function.book.price}"></th>
+                        <th class="text-center align-middle" >&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="book : ${books}" th:if="books">
+                        <td class="text-center align-middle" th:text="${book.bookSeq}"></td>
+                        <td class="text-center align-middle" th:text="${book.bookName}"></td>
+                        <td class="text-center align-middle" th:text="${book.author}"></td>
+                        <td class="text-center align-middle" th:text="${book.price}"></td>
+                        <td class="text-center align-middle">
+                            <a th:href="@{'/web/book/' + ${book.bookSeq}}" class="btn btn-primary">修改</a>
+                        </td>
+                    </tr>
+                    <tr th:if="!books">
+                        <td class="text-center align-middle" colspan="5"> No Data </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

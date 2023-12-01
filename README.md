@@ -276,3 +276,88 @@ public class KeepAlive {
     }
 }
 ```
+
+
+
+## 第八堂
+
+### 課程大綱
+- 撰寫Book CRUD UI的方式
+- 修正上週無法使用h2的問題
+
+> application-database.properties
+```properties
+spring.sql.init.mode=always
+```
+
+> Book.java
+```java
+@Data
+@Entity
+@Table(name = "books")
+public class Book {
+    @Id
+    @Column(name = "book_seq")
+    private Long bookSeq;
+    @Column(name = "book_name")
+    private String bookName;
+    @Column(name = "author")
+    private String author;
+    @Column(name = "price")
+    private Long price;
+
+    @Transient
+    private String action;
+}
+```
+
+> BookRepositoryCustomImpl.java
+```java
+    @Override
+    public List<Book> findBooksBySelective(Book book) {
+        return bookRepository.findAll((root, query, cb) -> {
+            query.distinct(true);
+            query.orderBy(cb.asc(root.get("bookSeq")));
+
+            final List<Predicate> predicates = new ArrayList<>();
+            if (book.getBookSeq() != null) {
+                predicates.add(cb.equal(root.get("bookSeq"), book.getBookSeq()));
+            }
+
+            if (StringUtils.isNotBlank(book.getBookName())) {
+                predicates.add(cb.like(root.get("bookName"), "%" + book.getBookName() + "%"));
+            }
+
+            if (StringUtils.isNotBlank(book.getAuthor())) {
+                predicates.add(cb.like(root.get("author"), "%" + book.getAuthor() + "%"));
+            }
+
+            if (book.getPrice() != null) {
+                predicates.add(cb.equal(root.get("price"), book.getPrice()));
+            }
+
+            return cb.and(predicates.toArray(new Predicate[0]));
+        });
+    }
+```
+
+> BookController.java
+```java    
+@GetMapping(value = "/web/book")
+    public String index(@RequestParam(value = "bookSeq", required = false) Long bookSeq,
+                        @RequestParam(value = "bookName", required = false) String bookName,
+                        @RequestParam(value = "author", required = false) String author,
+                        @RequestParam(value = "price", required = false) Long price,
+                        Model model) {
+
+        Book book = new Book();
+        book.setBookSeq(bookSeq);
+        book.setBookName(bookName);
+        book.setAuthor(author);
+        book.setPrice(price);
+        List<Book> books = bookRepository.findBooksBySelective(book);
+        model.addAttribute("books", books);
+        model.addAttribute("book", book);
+        return "book/index";
+        }
+```
