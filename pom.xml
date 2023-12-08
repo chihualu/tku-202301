@@ -14,7 +14,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring-boot.verison>3.1.3</spring-boot.verison>
+        <spring-boot.verison>3.2.0</spring-boot.verison>
         <lombok.version>1.18.28</lombok.version>
         <commons-lang3.verison>3.12.0</commons-lang3.verison>
         <thymeleaf-layout-dialec.version>3.3.0</thymeleaf-layout-dialec.version>
@@ -172,6 +172,11 @@
                 <version>8.0.1</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${spring-boot.verison}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

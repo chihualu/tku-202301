@@ -29,7 +29,7 @@ public class BookController {
                         @RequestParam(value = "author", required = false) String author,
                         @RequestParam(value = "price", required = false) Long price,
                         Model model) {
-
+        log.info("book index");
         Book book = new Book();
         book.setBookSeq(bookSeq);
         book.setBookName(bookName);
@@ -60,11 +60,11 @@ public class BookController {
     }
 
     @PostMapping(value = "/web/book")
-    public String modifyBook(Long bookSeq,
-                             String bookName,
-                             String author,
-                             Long price,
-                             String action,
+    public String modifyBook(@RequestParam(value = "bookSeq") Long bookSeq,
+                             @RequestParam(value = "bookName") String bookName,
+                             @RequestParam(value = "author") String author,
+                             @RequestParam(value = "price") Long price,
+                             @RequestParam(value = "action") String action,
                              Model model) {
         log.info(bookSeq);
         if(!StringUtils.isBlank(action)){

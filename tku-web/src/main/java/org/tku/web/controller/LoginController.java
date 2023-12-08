@@ -22,7 +22,7 @@ public class LoginController {
     LocaleResolver localeResolver;
 
     @GetMapping("/web/index")
-    public String index(@RequestParam(required = false) String locale,
+    public String index(@RequestParam(required = false, value = "locale") String locale,
                         HttpServletRequest request, HttpServletResponse response) {
         if(StringUtils.isNotBlank(locale)) {
             localeResolver.setLocale(request, response, new Locale(locale));

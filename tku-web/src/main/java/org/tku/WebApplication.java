@@ -55,18 +55,4 @@ public class WebApplication implements CommandLineRunner {
                 applicationContext.getEnvironment().getProperty("server.servlet.context-path"));
     }
 
-    @EventMapping
-    public void handleTextMessageEvent(MessageEvent event) throws JMSException {
-        log.info("event: " + event);
-        if (event.message() instanceof TextMessageContent) {
-            TextMessageContent message = (TextMessageContent) event.message();
-            final String originalMessageText = message.text();
-            log.info(originalMessageText);
-            Message textMessage = jmsTemplate.sendAndReceive("destQueue", session -> session.createTextMessage(originalMessageText));
-            messagingApiClient.replyMessage(new ReplyMessageRequest(
-                    event.replyToken(),
-                    List.of(new TextMessage(((jakarta.jms.TextMessage)textMessage). getText())),
-                    false));
-        }
-    }
 }
