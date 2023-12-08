@@ -50,14 +50,6 @@ public class WebApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        StringEncryptor stringEncryptor = applicationContext.getBean(StringEncryptor.class);
-        log.info(stringEncryptor.encrypt("password"));
-        log.info(applicationContext.getEnvironment().getProperty("spring.datasource.password"));
-//        log.info(applicationContext.getBean(PasswordEncoder.class).encode("123456"));
-//        userRepository.findById("kenny").ifPresent(user -> log.debug(user.toString()));
-//        userRepository.findById("john").ifPresent(user -> log.debug(user.toString()));
-//        userRepository.findAll().forEach(user -> log.debug(user.toString()));
-
         log.debug("Web Application is started! http://127.0.0.1:{}{}",
                 applicationContext.getEnvironment().getProperty("server.port"),
                 applicationContext.getEnvironment().getProperty("server.servlet.context-path"));

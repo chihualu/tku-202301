@@ -89,8 +89,13 @@
         <dependency>
             <groupId>com.linecorp.bot</groupId>
             <artifactId>line-bot-spring-boot-handler</artifactId>
-            <version>8.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.linecorp.bot</groupId>
+            <artifactId>line-bot-spring-boot-client</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
