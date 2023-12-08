@@ -358,6 +358,25 @@ public class Book {
         List<Book> books = bookRepository.findBooksBySelective(book);
         model.addAttribute("books", books);
         model.addAttribute("book", book);
+        
         return "book/index";
-        }
+    }
 ```
+
+
+
+## 第九堂
+
+### 課程大綱
+#### 訊息傳遞
+- 使用TCP Socket傳遞訊息
+- 使用activeMQ Artemis傳遞訊息
+- 使用Http傳遞訊息
+
+### 初次使用Linebot
+
+## 第十堂
+
+### 課程大綱
+- Linebot實作
+- 使用Linebot SpringBoot SDK
