@@ -17,6 +17,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
@@ -35,6 +36,7 @@ import java.util.List;
 @EnableScheduling
 @EnableJms
 @LineMessageHandler
+@EnableAspectJAutoProxy
 public class WebApplication implements CommandLineRunner {
     @Autowired
     private ApplicationContext applicationContext;
@@ -55,18 +57,18 @@ public class WebApplication implements CommandLineRunner {
                 applicationContext.getEnvironment().getProperty("server.servlet.context-path"));
     }
 
-    @EventMapping
-    public void handleTextMessageEvent(MessageEvent event) throws JMSException {
-        log.info("event: " + event);
-        if (event.message() instanceof TextMessageContent) {
-            TextMessageContent message = (TextMessageContent) event.message();
-            final String originalMessageText = message.text();
-            log.info(originalMessageText);
-            Message textMessage = jmsTemplate.sendAndReceive("destQueue", session -> session.createTextMessage(originalMessageText));
-            messagingApiClient.replyMessage(new ReplyMessageRequest(
-                    event.replyToken(),
-                    List.of(new TextMessage(((jakarta.jms.TextMessage)textMessage). getText())),
-                    false));
-        }
-    }
+//    @EventMapping
+//    public void handleTextMessageEvent(MessageEvent event) throws JMSException {
+//        log.info("event: " + event);
+//        if (event.message() instanceof TextMessageContent) {
+//            TextMessageContent message = (TextMessageContent) event.message();
+//            final String originalMessageText = message.text();
+//            log.info(originalMessageText);
+//            Message textMessage = jmsTemplate.sendAndReceive("destQueue", session -> session.createTextMessage(originalMessageText));
+//            messagingApiClient.replyMessage(new ReplyMessageRequest(
+//                    event.replyToken(),
+//                    List.of(new TextMessage(((jakarta.jms.TextMessage)textMessage). getText())),
+//                    false));
+//        }
+//    }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.LocaleResolver;
+import org.tku.web.annotation.Logging;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -22,7 +23,8 @@ public class LoginController {
     LocaleResolver localeResolver;
 
     @GetMapping("/web/index")
-    public String index(@RequestParam(required = false) String locale,
+    @Logging
+    public String index(@RequestParam(value = "locale", required = false) String locale,
                         HttpServletRequest request, HttpServletResponse response) {
         if(StringUtils.isNotBlank(locale)) {
             localeResolver.setLocale(request, response, new Locale(locale));
