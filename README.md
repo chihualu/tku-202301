@@ -380,3 +380,46 @@ public class Book {
 ### 課程大綱
 - Linebot實作
 - 使用Linebot SpringBoot SDK
+
+
+
+## 第十一堂
+
+### 課程大綱
+- 使用Jsoup當網路爬蟲，以大樂透為例
+```java
+    Document document = Jsoup.connect("https://www.taiwanlottery.com.tw/Lotto/BINGOBINGO/drawing.aspx").sslSocketFactory(WebApplication.socketFactory()).get();
+    Elements elements = document.getAllElements().select("td.thB table.tableFull tbody tr");
+    for(Element element : elements.stream().toList()) {
+        if(!element.select("td.tdA_3").isEmpty() || !element.select("td.tdA_4").isEmpty()) {
+            StringBuffer sb = new StringBuffer();
+            List<Element> list = element.select("td").stream().toList();
+            if(!StringUtil.isBlank(list.get(0).text())) {
+                sb.append("期別:").append(list.get(0).text()).append(",");
+                sb.append("獎號:").append(list.get(1).text()).append(",");
+                sb.append("超級獎號:").append(list.get(2).text()).append(",");
+                sb.append("猜大小:").append(list.get(3).text()).append(",");
+                sb.append("猜單雙:").append(list.get(4).text());
+                log.info(sb.toString());
+            }
+        }
+    }
+```
+- 上下傳檔案
+```java
+    @GetMapping(value = "/api/files")
+    public ResponseEntity<byte[]> download(@RequestParam(value = "fileName", required = false) String fileName) throws IOException {
+        byte[] content = IOUtils.toByteArray(Paths.get(folder, fileName).toUri());
+        return ResponseEntity.ok().header("Content-Disposition", "attachment;filename="+fileName).body(content);
+    }
+
+
+
+    @PostMapping(value = "/api/files")
+    public String upload(@RequestParam(name = "file") MultipartFile file) throws IOException {
+        log.info(file.getOriginalFilename());
+        FileUtils.copyInputStreamToFile(file.getInputStream(), Paths.get(folder, file.getOriginalFilename()).toFile());
+        return "redirect:/web/file";
+    }
+
+```
