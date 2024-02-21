@@ -18,7 +18,7 @@
         <lombok.version>1.18.28</lombok.version>
         <commons-lang3.verison>3.12.0</commons-lang3.verison>
         <thymeleaf-layout-dialec.version>3.3.0</thymeleaf-layout-dialec.version>
-        <postgresql.version>42.6.0</postgresql.version>
+        <postgresql.version>42.7.2</postgresql.version>
     </properties>
 
     <modules>
